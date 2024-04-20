@@ -7,6 +7,7 @@ root:
       - 1
       - 2
       - 3
+      - https://www.baidu.com
   map2:
     k1: v1
     k2: 1
