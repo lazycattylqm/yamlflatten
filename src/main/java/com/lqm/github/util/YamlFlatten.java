@@ -7,10 +7,7 @@ import org.apache.commons.lang3.StringUtils;
 
 import java.io.File;
 import java.io.InputStream;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.StringJoiner;
+import java.util.*;
 
 public class YamlFlatten {
 
@@ -56,8 +53,10 @@ public class YamlFlatten {
         });
     }
 
-    public void writeToFile(Map<String, Object> source) {
-        File file = new File(Constant.FILE_NAME);
+    public void writeToFile(Map<String, Object> source, String outPath) {
+        String path = Optional.ofNullable(outPath)
+                .orElse(Constant.FILE_NAME);
+        File file = new File(path);
         if (file.exists()) {
             file.delete();
         }

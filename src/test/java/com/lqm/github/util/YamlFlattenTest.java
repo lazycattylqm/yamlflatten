@@ -17,7 +17,7 @@ class YamlFlattenTest {
         Map<String, Object> flatten = util.flatten(yamlMap, "");
         System.out.println(flatten);
         util.samplePrint(flatten);
-        util.writeToFile(flatten);
+        util.writeToFile(flatten, null);
 
     }
 }
