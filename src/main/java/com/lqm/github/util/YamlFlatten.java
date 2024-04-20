@@ -1,8 +1,8 @@
 package com.lqm.github.util;
 
-import cn.hutool.core.io.resource.ResourceUtil;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
+import org.apache.commons.codec.Resources;
 import org.apache.commons.lang3.StringUtils;
 
 import java.io.File;
@@ -17,7 +17,7 @@ public class YamlFlatten {
     private final ObjectMapper mapper = new ObjectMapper(new YAMLFactory());
 
     public Map<String, Object> readFile(String filePath) {
-        try(InputStream stream = ResourceUtil.getStream(filePath)) {
+        try(InputStream stream = Resources.getInputStream(filePath)) {
             return mapper.readValue(stream, Map.class);
         } catch (Exception e) {
             throw new RuntimeException(e);

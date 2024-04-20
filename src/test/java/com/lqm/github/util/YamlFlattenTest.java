@@ -12,7 +12,7 @@ class YamlFlattenTest {
 
     @Test
     void readFile() {
-        Map<String, Object> yamlMap = util.readFile("classpath:files/test.yaml");
+        Map<String, Object> yamlMap = util.readFile("files/test.yaml");
         System.out.println(yamlMap);
         Map<String, Object> flatten = util.flatten(yamlMap, "");
         System.out.println(flatten);
