@@ -10,6 +10,7 @@ import java.io.InputStream;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.StringJoiner;
 
 public class YamlFlatten {
 
@@ -23,31 +24,30 @@ public class YamlFlatten {
         }
     }
 
+
     public Map<String, Object> flatten(Map<String, Object> ori, String prefix) {
         Map<String, Object> r = new HashMap<>();
-        ori.forEach((key, value)->{
-            String p = key;
-            if (!StringUtils.isEmpty(prefix)) {
-                p = prefix+"."+key;
-            }
-            if (value instanceof Map m) {
-                r.putAll(flatten(m, p));
-            } else if (value instanceof List<?> l) {
-                String v = flatList(l);
-                r.put(p, v);
-            }
-            else {
-                r.put(p, value);
-            }
-        });
+        flatten(ori, prefix, r);
         return r;
     }
 
+    private void flatten(Map<String, Object> ori, String prefix, Map<String, Object> result) {
+        ori.forEach((key, value) -> {
+            String p = StringUtils.isEmpty(prefix) ? key : prefix + "." + key;
+            if (value instanceof Map m) {
+                flatten(m, p, result);
+            } else if (value instanceof List<?> l) {
+                result.put(p, flatList(l));
+            } else {
+                result.put(p, value);
+            }
+        });
+    }
+
     public String flatList( List l) {
-        List list = l.stream()
-                .map(Object::toString)
-                .toList();
-        return String.join(",", list);
+        StringJoiner sj = new StringJoiner(",");
+        l.forEach(e-> sj.add(e.toString()));
+        return sj.toString();
     }
 
     public void samplePrint(Map<String, Object> m) {
